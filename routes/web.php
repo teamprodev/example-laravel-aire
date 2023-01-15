@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::controller(PostController::class)->group(function () {
+    Route::get('/','index')->name('home');
+    Route::get('/create','create')->name('create');
+    Route::post('/store','store')->name('store');
+    Route::get('/edit/{post}','edit')->name('edit');
+    Route::post('/update/{post}','update')->name('update');
+    Route::get('/delete/{post}','destroy')->name('destroy');
 });
-
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
